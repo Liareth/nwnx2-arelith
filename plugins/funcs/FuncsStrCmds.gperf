@@ -1,0 +1,167 @@
+%{
+/***************************************************************************
+    NWNXFuncs.h - Interface for the CNWNXFuncs class.
+    Copyright (C) 2007 Doug Swarin (zac@intertex.net)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ ***************************************************************************/
+
+#ifndef NWNX_FUNCS_STRCMDS_H
+#define NWNX_FUNCS_STRCMDS_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+%}
+
+struct FuncsStrCommand_s {
+    const char  *name;
+    void       (*func)(CGameObject *, char *);
+};
+
+%%
+ACTIONUSEITEM,                         Func_ActionUseItem
+ADDKNOWNFEAT,                          Func_AddKnownFeat
+ADDKNOWNFEATATLEVEL,                   Func_AddKnownFeatAtLevel
+ADDKNOWNSPELL,                         Func_AddKnownSpell
+ADDSPECIALABILITY,                     Func_AddSpecialAbility
+BOOTPCWITHMESSAGE,                     Func_BootPCWithMessage
+BROADCASTPROJECTILE,                   Func_BroadcastProjectile
+DUMPOBJECT,                            Func_DumpObject
+GETABILITYINCREASEBYLEVEL,             Func_GetAbilityIncreaseByLevel
+GETACNATURALBASE,                      Func_GetACNaturalBase
+GETALLMEMORIZEDSPELLS,                 Func_GetAllMemorizedSpells
+GETALLREMAININGFEATUSES,               Func_GetAllRemainingFeatUses
+GETBONUSSPELLSLOTS,                    Func_GetBonusSpellSlots
+GETCLASSBYLEVEL,                       Func_GetClassByLevel
+GETCLERICDOMAIN,                       Func_GetClericDomain
+GETCONVERSATION,                       Func_GetConversation
+GETCORPSEDECAYTIME,		       Func_GetCorpseDecayTime
+GETCREATUREEVENTHANDLER,               Func_GetCreatureEventHandler
+GETCRITICALHITMULTIPLIER,              Func_GetCriticalHitMultiplier
+GETCRITICALHITRANGE,                   Func_GetCriticalHitRange
+GETDAMAGEIMMUNITY,                     Func_GetDamageImmunity
+GETEFFECTSKILLMODIFIER,                Func_GetEffectSkillModifier
+GETENTIREITEMAPPEARANCE,               Func_GetEntireItemAppearance
+GETEVENTHANDLER,                       Func_GetEventHandler
+GETFACTIONID,                          Func_GetFactionId
+GETGROUNDHEIGHT,                       Func_GetGroundHeight
+GETISCLASSBONUSFEAT,                   Func_GetIsClassBonusFeat
+GETISCLASSGENERALFEAT,                 Func_GetIsClassGeneralFeat
+GETISCLASSGRANTEDFEAT,                 Func_GetIsClassGrantedFeat
+GETISCLASSSKILL,                       Func_GetIsClassSkill
+GETISSTATIC,                           Func_GetIsStatic
+GETISWALKABLE,                         Func_GetIsWalkable
+GETITEMBYPOSITIONREQUEST,              Func_GetItemByPositionRequest
+GETITEMCOUNT,                          Func_GetItemCount
+GETKNOWNFEAT,                          Func_GetKnownFeat
+GETKNOWNFEATBYLEVEL,                   Func_GetKnownFeatByLevel
+GETKNOWNSPELL,                         Func_GetKnownSpell
+GETKNOWSFEAT,                          Func_GetKnowsFeat
+GETKNOWSSPELL,                         Func_GetKnowsSpell
+GETLOCALVARIABLEBYPOSITION,            Func_GetLocalVariableByPosition
+GETLOCALVARIABLECOUNT,                 Func_GetLocalVariableCount
+GETMAXHITPOINTSBYLEVEL,                Func_GetMaxHitPointsByLevel
+GETMAXSPELLSLOTS,                      Func_GetMaxSpellSlots
+GETMEETSFEATREQUIREMENTS,              Func_GetMeetsFeatRequirements
+GETMEMORIZEDSPELL,                     Func_GetMemorizedSpell
+GETPCBODYBAG,                          Func_GetPCBodyBag
+GETPCFILENAME,                         Func_GetPCFileName
+GETPCPORT,                             Func_GetPCPort
+GETPCSKILLPOINTS,                      Func_GetPCSkillPoints
+GETPORTRAIT,                           Func_GetPortrait
+GETQUICKBARSLOT,                       Func_GetQuickBarSlot
+GETREMAININGFEATUSES,                  Func_GetRemainingFeatUses
+GETREMAININGSPELLSLOTS,                Func_GetRemainingSpellSlots
+GETSAVINGTHROWBONUS,                   Func_GetSavingThrowBonus
+GETSKILLINCREASEBYLEVEL,               Func_GetSkillIncreaseByLevel
+GETSOUNDSET,                           Func_GetSoundset
+GETSPECIALABILITY,                     Func_GetSpecialAbility
+GETTOTALFEATUSES,                      Func_GetTotalFeatUses
+GETTOTALKNOWNFEATS,                    Func_GetTotalKnownFeats
+GETTOTALKNOWNFEATSBYLEVEL,             Func_GetTotalKnownFeatsByLevel
+GETTOTALKNOWNSPELLS,                   Func_GetTotalKnownSpells
+GETTOTALSPECIALABILITIES,              Func_GetTotalSpecialAbilities
+GETWIZARDSPECIALIZATION,               Func_GetWizardSpecialization
+INTTOOBJECTREQUEST,                    Func_IntToObjectRequest
+JUMPTOLIMBO,                           Func_JumpToLimbo
+MODIFYABILITYSCORE,                    Func_ModifyAbilityScore
+MODIFYCURRENTHITPOINTS,                Func_ModifyCurrentHitPoints
+MODIFYSKILLRANK,                       Func_ModifySkillRank
+MODIFYSKILLRANKBYLEVEL,                Func_ModifySkillRankByLevel
+RECALCULATEDEXMODIFIER,                Func_RecalculateDexModifier
+REMOVEKNOWNFEAT,                       Func_RemoveKnownFeat
+REMOVEKNOWNFEATBYLEVEL,                Func_RemoveKnownFeatByLevel
+REMOVEKNOWNSPELL,                      Func_RemoveKnownSpell
+REMOVESPECIALABILITY,                  Func_RemoveSpecialAbility
+REPLACEKNOWNFEAT,                      Func_ReplaceKnownFeat
+REPLACEKNOWNSPELL,                     Func_ReplaceKnownSpell
+RESTOREITEMAPPEARANCE,                 Func_RestoreItemAppearance
+RESTOREREADYFEATS,                     Func_RestoreReadyFeats
+RESTOREREADYSPELLS,                    Func_RestoreReadySpells
+SETABILITYSCORE,                       Func_SetAbilityScore
+SETACNATURALBASE,                      Func_SetACNaturalBase
+SETALIGNMENTVALUE,                     Func_SetAlignmentValue
+SETBASEITEMTYPE,                       Func_SetBaseItemType
+SETCLERICDOMAIN,                       Func_SetClericDomain
+SETCONVERSATION,                       Func_SetConversation
+SETCORPSEDECAYTIME,                    Func_SetCorpseDecayTime
+SETCREATUREEVENTHANDLER,               Func_SetCreatureEventHandler
+SETCREATURESIZE,                       Func_SetCreatureSize
+SETCURRENTHITPOINTS,                   Func_SetCurrentHitPoints
+SETEVENTHANDLER,                       Func_SetEventHandler
+SETFACTIONID,                          Func_SetFactionId
+SETGENDER,                             Func_SetGender
+SETGOLDPIECEVALUE,                     Func_SetGoldPieceValue
+SETISCREATUREDISARMABLE,               Func_SetIsCreatureDisarmable
+SETITEMAPPEARANCE,                     Func_SetItemAppearance
+SETITEMCOLOR,                          Func_SetItemColor
+SETITEMWEIGHT,                         Func_SetItemWeight
+SETKNOWNFEAT,                          Func_SetKnownFeat
+SETKNOWNFEATBYLEVEL,                   Func_SetKnownFeatByLevel
+SETKNOWNSPELL,                         Func_SetKnownSpell
+SETLASTHOSTILEACTOR,                   Func_SetLastHostileActor
+SETMAXHITPOINTS,                       Func_SetMaxHitPoints
+SETMAXHITPOINTSBYLEVEL,                Func_SetMaxHitPointsByLevel
+SETMEMORIZEDSPELL,                     Func_SetMemorizedSpell
+SETMOVEMENTRATE,                       Func_SetMovementRate
+SETPCBODYBAG,                          Func_SetPCBodyBag
+SETPCLOOTABLE,                         Func_SetPCLootable
+SETPCSKILLPOINTS,                      Func_SetPCSkillPoints
+SETPLACEABLEAPPEARANCE,                Func_SetPlaceableAppearance
+SETPORTRAIT,                           Func_SetPortrait
+SETQUICKBARSLOT,                       Func_SetQuickBarSlot
+SETRACIALTYPE,                         Func_SetRacialType
+SETREMAININGSPELLSLOTS,                Func_SetRemainingSpellSlots
+SETSAVINGTHROWBONUS,                   Func_SetSavingThrowBonus
+SETSKILLRANK,                          Func_SetSkillRank
+SETSOUNDSET,                           Func_SetSoundset
+SETSPECIALABILITY,                     Func_SetSpecialAbility
+SETTAG,                                Func_SetTag
+SETTRAPCREATOR,                        Func_SetTrapCreator
+SETWIZARDSPECIALIZATION,               Func_SetWizardSpecialization
+STRINGTOOBJECTREQUEST,                 Func_StringToObjectRequest
+USLEEP,                                Func_USleep
+GETTIMEOFDAY,                          Func_GetTimeOfDay
+%%
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* NWNX_FUNCS_STRCMDS_H */
+
+/* vim: set sw=4: */
