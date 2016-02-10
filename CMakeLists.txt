@@ -32,10 +32,11 @@ set(dont_build_plugins
     #names
     #odmbc
     #optimizations
+    #physfs
     profiler
-    redis
+    #redis
     #reset
-    resman
+    #resman
     #ruby
     serverlist
     #spells
