@@ -7,6 +7,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${NWNX_OUTPUT_DIR})
 # You can exclude plugins from being built here.
 set(dont_build_plugins
     areas
+    #arelith-admin
     #arelith-debug
     #arelith-errors
     #arelith-events
