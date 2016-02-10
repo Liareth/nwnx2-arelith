@@ -36,27 +36,40 @@ char* NWNXArelithAdmin::OnRequest(char* gameObject, char* request, char* params)
 
     if (requestStr.find("GET_PLAYER_PASSWORD") != std::string::npos)
     {
+        Log(0, "Getting player password ... ");
         CExoString pw = g_pAppManager->ServerExoApp->GetNetLayer()->GetPlayerPassword();
         char* copy = new char[std::strlen(pw.Text) + 1];
         std::strcpy(copy, pw.Text);
+        Log(0, "got %s!\n", copy);
         return copy;
     }
     else if (requestStr.find("GET_DM_PASSWORD") != std::string::npos)
     {
+        Log(0, "Getting DM password ... ");
         CExoString pw = g_pAppManager->ServerExoApp->GetNetLayer()->GetGameMasterPassword();
         char* copy = new char[std::strlen(pw.Text) + 1];
         std::strcpy(copy, pw.Text);
+        Log(0, "got %s!\n", copy);
         return copy;
     }
     else if (requestStr.find("SET_PLAYER_PASSWORD") != std::string::npos)
     {
-        CExoString pw = request;
-        g_pAppManager->ServerExoApp->GetNetLayer()->SetPlayerPassword(pw);
+        Log(0, "Setting player password to %s ... ", params);
+        g_pAppManager->ServerExoApp->GetNetLayer()->SetPlayerPassword(params);
+        Log(0, "set!\n");
+
     }
     else if (requestStr.find("SET_DM_PASSWORD") != std::string::npos)
     {
-        CExoString pw = request;
-        g_pAppManager->ServerExoApp->GetNetLayer()->SetGameMasterPassword(pw);
+        Log(0, "Setting DM password to %s ... ", params);
+        g_pAppManager->ServerExoApp->GetNetLayer()->SetGameMasterPassword(params);
+        Log(0, "set!\n");
+    }
+    else if (requestStr.find("CLEAR_PLAYER_PASSWORD") != std::string::npos)
+    {
+        Log(0, "Clearing player password ... ");
+        g_pAppManager->ServerExoApp->GetNetLayer()->SetPlayerPassword("");
+        Log(0, "done!\n");
     }
 
     return nullptr;

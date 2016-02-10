@@ -4,6 +4,8 @@ string GetDMPassword();
 void SetPlayerPassword(string password);
 void SetDMPassword(string password);
 
+void ClearPlayerPassword();
+
 string GetPlayerPassword()
 {
     SetLocalString(GetModule(), "NWNX!ARELITH_ADMIN!GET_PLAYER_PASSWORD", " ");
@@ -24,4 +26,9 @@ void SetPlayerPassword(string password)
 void SetDMPassword(string password)
 {
     SetLocalString(GetModule(), "NWNX!ARELITH_ADMIN!SET_DM_PASSWORD", password);
+}
+
+void ClearPlayerPassword()
+{
+    SetLocalString(GetModule(), "NWNX!ARELITH_ADMIN!CLEAR_PLAYER_PASSWORD", " ");
 }
