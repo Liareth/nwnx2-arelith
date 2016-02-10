@@ -12,7 +12,6 @@ set(dont_build_plugins
     #arelith-events
     #arelith-hiddenhelmets
     #arelith-optimizations-objcache
-    arelith-profiler
     #arelith-stealth
     #chat
     #connect
