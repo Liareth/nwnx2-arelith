@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>
+#include <errno.h>
 
 //-------------------------------------------------------------------------
 // Function declarations
@@ -37,23 +38,30 @@ int open(const char* pathname, int flags, mode_t mode)
         }
     }
 
-    fprintf(logFile, "Opening file %s with flags %i.\n", pathname, flags);
+    fprintf(logFile, "Opening file %s with flags %i and mode %u.\n", pathname, flags);
     int fd = glibc_open_2433(pathname, flags, mode);
 
     if ( fd != -1 )
     {
-        fprintf(logFile, "Updating permissions on file %s.\n", pathname);
+        fprintf(logFile, "-> Attempting to update permissions on file %s.\n", pathname);
         int newFd = fcntl(fd, 0, 1024);
 
         if ( newFd >= 0 )
         {
+            fprintf(logFile, "-> Successfully updated permissions on file %s.\n", pathname);
             close(fd);
             fd = newFd;
         }
+        else
+        {
+            fprintf(logFile, "-> Failed to update permissions on file %s.\n", pathname);
+        }
+
+        fprintf(logFile, "-> Successfully opened file %s.\n", pathname);
     }
     else
     {
-        fprintf(logFile, "Failed to open file %s.\n", pathname);
+        fprintf(logFile, "-> Failed to open file %s because of error %i.\n", pathname, errno);
     }
 
     fclose(logFile);
