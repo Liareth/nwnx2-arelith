@@ -130,6 +130,10 @@ target_link_libraries(nwnx2 BeaEngine)
 # for core/ThreadUtil
 target_link_libraries(nwnx2 pthread)
 
+# Preload-open (fixed BioDB bugs)
+add_library(preload-open SHARED preload-open/preload-open)
+set_target_properties(preload-open PROPERTIES PREFIX "")
+
 # External dependancies.
 add_subdirectory(external)
 
