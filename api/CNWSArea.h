@@ -147,9 +147,9 @@ public:
     ~CNWSArea();
     CNWSArea(CResRef, int, unsigned long);
 
-    /* 0x0/0 */ unsigned long field_0;
-    /* 0x4/4 */ unsigned long field_4;
-    /* 0x8/8 */ unsigned long field_8;
+    /* 0x0/0 */ unsigned long Flags;
+    /* 0x4/4 */ unsigned long Width;
+    /* 0x8/8 */ unsigned long Height;
     /* 0xC/12 */ unsigned long field_C;
     /* 0x10/16 */ unsigned long field_10;
     /* 0x14/20 */ unsigned long field_14;
@@ -191,10 +191,7 @@ public:
     /* 0xA4/164 */ unsigned long vtable;
     /* 0xA8/168 */ unsigned long field_A8;
     /* 0xAC/172 */ unsigned long field_AC;
-    /* 0xB0/176 */ unsigned long ResRef;
-    /* 0xB4/180 */ unsigned long field_B4;
-    /* 0xB8/184 */ unsigned long field_B8;
-    /* 0xBC/188 */ unsigned long field_BC;
+    /* 0xB0/176 */ CResRef ResRef;
     /* 0xC0/192 */ unsigned long CResARE;
     /* 0xC4/196 */ CGameObject GameObject;
     /* 0xD4/212 */ unsigned long NumPlayers;
@@ -230,7 +227,7 @@ public:
     /* 0x1F0/496 */ char rsvd5[3];
     /* 0x1F0/496 */ char WeatherStarted;
     /* 0x1F4/500 */ char rsvd6[3];
-    /* 0x1F4/500 */ unsigned long field_1F4;
+    /* 0x1F4/500 */ unsigned long NightDayDawnDusk;
     /* 0x1F8/504 */ unsigned long m_nLastUpdateCalendarDay;
     /* 0x1FC/508 */ unsigned long m_nLastUpdateTimeOfDay;
     /* 0x200/512 */ unsigned long field_200;

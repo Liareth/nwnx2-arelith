@@ -7,6 +7,7 @@
 #include "CScriptLocation.h"
 #include "CExoLocString.h"
 #include "CExoLinkedList.h"
+#include "CExoArrayList.h"
 #include "CNWSObjectActionNode.h"
 #include "CGameEffect.h"
 #include "CNWSScriptVarTable.h"
@@ -306,13 +307,21 @@ public:
     /* 0x60/96 */ unsigned long AILevel;
     /* 0x64/100 */ unsigned long field_64;
     /* 0x68/104 */ unsigned long field_68;
-    /* 0x6C/108 */ unsigned long field_6C;
+    /* 0x6C/108 */ unsigned long ActionID;
     /* 0x70/112 */ unsigned long ActionTarget;
     /* 0x78/120 */ char rsvd2[4];
     /* 0x78/120 */ unsigned long AreaID;
     /* 0x7C/124 */ Vector m_vPosition;
     /* 0x88/136 */ Vector m_vOrientation;
-    /* 0xB8/184 */ char rsvd3[36];
+    /* 0x94 */     unsigned long WorldTimeDay;
+    /* 0x98 */     unsigned long WorldTimeTime;
+    /* 0x9C */     unsigned long AIActionTimeDay;
+    /* 0xA0 */     unsigned long AIActionTimeTime;
+    /* 0xA4 */     unsigned long AnimationDay;
+    /* 0xA8 */     unsigned long AnimationTime;
+    /* 0xAC */     unsigned long ExcitedTimeRemaining;
+    /* 0xB0 */     unsigned long Animation;
+    /* 0xB4 */     unsigned long AnimationSpeed;
     /* 0xB8/184 */ unsigned long HitPoints;
     /* 0xBC/188 */ unsigned short field_BC;
     /* 0xBE/190 */ char field_BE;
@@ -329,11 +338,12 @@ public:
     /* 0xDC/220 */ CNWSScriptVarTable ScriptVarTable;
     /* 0xE4/228 */ unsigned long field_E4;
     /* 0xE8/232 */ unsigned long field_E8;
-    /* 0xEC/236 */ CGameEffect **Effects;
-    /* 0xF0/240 */ unsigned long EffectsLength;
-    /* 0xF4/244 */ char rsvd5[4];
-    /* 0xF8/248 */ unsigned long PerceptionList;
-    /* 0x1C0/448 */ char rsvd6[196];
+    /* 0xEC/236 */ CExoArrayList<CGameEffect *> EffectList;
+    /* 0xF8/248 */ CExoArrayList<CLoopingVisualEffect *> LoopingVisualEffectList;
+    /* 0x104/ */   CExoArrayList<void *> EffectTargetList;
+    /* 0x1C0/448 */ char rsvd6[176];
     /* 0x1C0/448 */ unsigned long field_1C0;
 };
+
+// static_assert(sizeof(CNWSObject) == 0x1c4, "sizeof() wrong, you broke fields");
 #endif

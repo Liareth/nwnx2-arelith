@@ -7,5 +7,9 @@ class CResIFO
 public:
     ~CResIFO();
 
+    uint32_t field0;
+    CResGFF *gff;
+    CResRef resRef;
+    uint32_t mod_vtbl;
 };
 #endif

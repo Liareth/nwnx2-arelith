@@ -10,5 +10,11 @@ public:
     int operator==(CCombatInformationNode &);
     int operator!=(CCombatInformationNode &);
 
+    char field_0;
+    char field_1;
+    char field_2;
+    char field_3;
+    char field_4;
+    char race;
 };
 #endif

@@ -45,5 +45,33 @@ public:
     ~CNWSAreaOfEffectObject();
     CNWSAreaOfEffectObject(unsigned long);
 
+    /* 0x0 */            CNWSObject Object;
+    /* 0x1c4 */          unsigned short ObjectArrayIndex;
+    /* 0x1c6 */          char field_1c6;
+    /* 0x1c7 */          char field_1c7;
+    /* 0x1c8 */          unsigned long AreaEFfectId;
+    /* 0x1cc */          char Shape;
+    /* 0x1cd */          char field_1cd;
+    /* 0x1ce */          char field_1ce;
+    /* 0x1cf */          char field_1cf;
+    /* 0x1d0 */          unsigned long EffectSpellId;
+    /* 0x1d4 */          unsigned long Radius;
+    /* 0x1d8 */          unsigned long Width;
+    /* 0x1dc */          unsigned long Length;
+    /* 0x1e0 */          unsigned long SomethingRelatedShapeEq1Ptr48;
+    /* 0x1e4 */          unsigned long CreatorId;
+    /* 0x1e8 */          unsigned long LinkedToObjectId;
+    /* 0x1ec */          unsigned long LastEntered;
+    /* 0x1f0 */          unsigned long LastLeft;
+    /* 0x1f4 */          unsigned long SpellSaveDC;
+    /* 0x1f8 */          unsigned long ClassLevels;
+    /* 0x1fc */          CExoString OnHeartbeat;
+    /* 0x204 */          CExoString OnUserDefined;
+    /* 0x20c */          CExoString OnObjEnter;
+    /* 0x214 */          CExoString OnObjExit;
+    /* 0x21c */          unsigned long LastHrtbtDay;
+    /* 0x220 */          unsigned long LastHrtbtTime;
+    /* 0x224 */          unsigned long DurationInMilliseconds;
+    /* 0x228 */          unsigned long DurationType;
 };
 #endif

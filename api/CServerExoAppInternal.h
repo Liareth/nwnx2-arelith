@@ -176,7 +176,7 @@ public:
     /* 0x1007C/65660 */ unsigned long field_1007C;
     /* 0x10080/65664 */ unsigned long m_GameObjectArray;
     /* 0x10084/65668 */ unsigned long field_10084;
-    /* 0x10088/65672 */ void *ClientsList;
+    /* 0x10088/65672 */ CExoLinkedList<CNWSClient> *ClientsList;
     /* 0x1008C/65676 */ unsigned long field_1008C;
     /* 0x10090/65680 */ unsigned long field_10090;
     /* 0x10094/65684 */ unsigned long field_10094;

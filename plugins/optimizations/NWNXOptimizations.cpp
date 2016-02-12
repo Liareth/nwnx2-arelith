@@ -1,54 +1,23 @@
-/***************************************************************************
-    NWNX Optimizations - Implementation of the CNWNXOptimizations class.
-    (c) 2010 virusman (virusman@virusman.ru)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ***************************************************************************/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <pthread.h>
-#include <stddef.h>
-
-#include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <inttypes.h>
 #include <stdarg.h>
 #include <sys/types.h>
 #include <sys/param.h>
-#include <limits.h>
 
 #include "NWNXOptimizations.h"
-#include "HookFunc.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+#include "Console.h"
+#include "hooks/TickRate.h"
+#include "hooks/RunScriptCallback.h"
+#include "hooks/AIActionSit.h"
+#include "hooks/HrTimer.h"
 
 CNWNXOptimizations::CNWNXOptimizations()
 {
     confKey = "OPTIMIZATIONS";
 }
 
-CNWNXOptimizations::~CNWNXOptimizations()
-{
-}
-
-bool CNWNXOptimizations::OnCreate(gline *config, const char* LogDir)
+bool CNWNXOptimizations::OnCreate(gline* config, const char* LogDir)
 {
     char log[128];
     bool validate = true, startServer = true;
@@ -58,25 +27,35 @@ bool CNWNXOptimizations::OnCreate(gline *config, const char* LogDir)
     if (!CNWNXBase::OnCreate(config, log))
         return false;
 
-    unsigned int targetTickRate = 30;
-
-    if (nwnxConfig->exists(confKey))
-    {
-        std::string tickrate = (*nwnxConfig)[confKey]["target_tick_rate"];
-
-        if (!tickrate.empty())
-        {
-            targetTickRate = std::atoi(tickrate.c_str());
-        }
+    if (!nwnxConfig->exists(confKey)) {
+        printf("You really ought to configure nwnx_optimizations before running it.\n");
+        exit(1);
     }
 
-    SetTargetTickRate(targetTickRate);
+    HookHrTimer();
 
-    // write copy information to the log file
-    Log(0, "NWNX Optimizations version 1.0 for Linux.\n");
-    Log(0, "(c) 2010 by virusman (virusman@virusman.ru)\n");
+    HookConsole();
 
-    return (HookFunctions());
+    if ((*nwnxConfig)[confKey]["hook_tick_rate"] == "1") {
+        HookTickRate();
+
+        uint32_t highTick = 33;
+        uint32_t lowTick = 3;
+
+        if (!(*nwnxConfig)[confKey]["tick_rate_target_high"].empty())
+            highTick = atoi((*nwnxConfig)[confKey]["tick_rate_target_high"].c_str());
+        if (!(*nwnxConfig)[confKey]["tick_rate_target_low"].empty())
+            lowTick = atoi((*nwnxConfig)[confKey]["tick_rate_target_low"].c_str());
+
+        SetTargetTickRates(highTick, lowTick);
+    }
+
+    HookRunScriptCallback();
+
+    if ((*nwnxConfig)[confKey]["hook_ai_action_sit"] == "1")
+        HookAIActionSit();
+
+    return true;
 }
 
 char* CNWNXOptimizations::OnRequest(char* gameObject, char* Request, char* Parameters)
@@ -85,10 +64,4 @@ char* CNWNXOptimizations::OnRequest(char* gameObject, char* Request, char* Param
     Log(2, "Params:  \"%s\"\n", Parameters);
 
     return NULL;
-}
-
-bool CNWNXOptimizations::OnRelease()
-{
-    Log(0, "o Shutdown.\n");
-    return true;
 }

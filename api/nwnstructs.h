@@ -18,8 +18,7 @@ struct CNWSClient_vtbl {
 struct CServerExoAppConfig {
     /* 0x0/0 */ unsigned long field_0;
     /* 0x4/4 */ unsigned long field_4;
-    /* 0x8/8 */ unsigned long field_8;
-    /* 0xC/12 */ unsigned long field_C;
+    /* 0x8/8 */ CExoString ModuleName;
     /* 0x10/16 */ unsigned long field_10;
     /* 0x14/20 */ unsigned long field_14;
     /* 0x18/24 */ unsigned long field_18;
@@ -199,9 +198,10 @@ struct CNWSCreatureAppearanceInfo {
     /* 0x34/52 */ unsigned long field_34;
     /* 0x38/56 */ unsigned long field_38;
     /* 0x3C/60 */ unsigned long field_3C;
+
 };
 struct CResStruct {
-    /* 0x0/0 */ unsigned long m_nStructIndex;
+    /* 0x0/0 */ unsigned long StructId;
 };
 struct CNWSActionNode {
     /* 0x0/0 */ unsigned long ActionType;
@@ -506,6 +506,8 @@ struct SRecord {
 struct CResGFFField {
 };
 struct CResList {
+    unsigned long StructId;
+    char Label[16];
 };
 struct CResGFFStruct {
 };
@@ -526,6 +528,9 @@ struct SGameSpyRoomEntry {
 struct CWorldJournalEntry {
 };
 struct CNWSInvitationDetails {
+    unsigned long ObjectID;
+    unsigned long WorldTimerDay;
+    unsigned long WorldTimerTime;
 };
 struct CNWSPersonalReputation {
 };

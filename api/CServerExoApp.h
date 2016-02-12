@@ -74,7 +74,7 @@ public:
     int GetMoveToModulePending();
     int GetMoveToModuleString();
     int GetMultiplayerEnabled();
-    CNWSMessage * GetNWSMessage();
+    CNWSMessage* GetNWSMessage();
     CNetLayer * GetNetLayer();
     unsigned long GetNextPCObject();
     CGameObjectArray * GetObjectArray();

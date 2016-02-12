@@ -1,5 +1,7 @@
 #ifndef _NWN_ALL_H_
 #define _NWN_ALL_H_
+#include "../typedef.h"
+
 #include "CNWSCreature.h"
 #include "CNWSPlaceable.h"
 #include "CNWSObject.h"
@@ -202,4 +204,5 @@
 #include "MS_RSAPublicKey.h"
 #include "Matrix.h"
 #include "custom/nwn_globals.h"
+#include "static_asserts.h"
 #endif
