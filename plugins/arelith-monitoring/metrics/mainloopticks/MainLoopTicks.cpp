@@ -62,7 +62,6 @@ int Metrics::MainLoopTicks::MainLoopAfter(uintptr_t)
 
         g_lastFlushTime = curTime;
         g_mainLoopTicks = 0;
-        printf("test\n");
     }
 
     ++g_mainLoopTicks;
