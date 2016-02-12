@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS monitoring_snapshots;
+DROP TABLE IF EXISTS monitoring_servers;
+
 CREATE TABLE monitoring_snapshots 
 (
     ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -12,7 +14,6 @@ CREATE TABLE monitoring_snapshots
     INDEX monitoring_snapshots_FKIndex1(monitoring_servers_ID)
 );
 
-DROP TABLE IF EXISTS monitoring_servers;
 CREATE TABLE monitoring_servers
 (
   ID TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
