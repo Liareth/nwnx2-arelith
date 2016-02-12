@@ -12,6 +12,7 @@ set(dont_build_plugins
     #arelith-errors
     #arelith-events
     #arelith-hiddenhelmets
+    #arelith-monitoring
     #arelith-optimizations-objcache
     #arelith-stealth
     #chat
