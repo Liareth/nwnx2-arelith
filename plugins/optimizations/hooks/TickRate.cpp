@@ -30,7 +30,7 @@ static void CServerAIMaster__UpdateState(CServerAIMaster* aiMaster)
     if (elapsedTime > targetDelta)
     {
         aiMaster->UpdateState();
-        g_lastAIUpdateTime = curTIme;
+        g_lastAIUpdateTime = curTime;
     }
 }
 
