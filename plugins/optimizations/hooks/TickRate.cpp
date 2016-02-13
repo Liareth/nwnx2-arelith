@@ -47,7 +47,7 @@ int eventMainLoopAfter(uintptr_t)
 
     if (elapsedTime < 10)
     {
-        usleep(10 - elapsedTime);
+        usleep((10 - elapsedTime) * 1000.0f);
     }
 
     return 0;
