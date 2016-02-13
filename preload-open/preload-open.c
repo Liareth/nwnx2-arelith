@@ -25,6 +25,11 @@ int (*glibc_open_2433)(const char*, int, mode_t); // weak
 //----- (000005FC) --------------------------------------------------------
 int open(const char* pathname, int flags, mode_t mode)
 {
+    if (strstr(pathname, "C4.log")) // Always ignore BioDB log requests
+    {
+        return -1;
+    }
+
     FILE* logFile = fopen("logs.0/preload-open.txt", "a");
 
     if ( !glibc_open_2433 )
@@ -38,30 +43,24 @@ int open(const char* pathname, int flags, mode_t mode)
         }
     }
 
-    fprintf(logFile, "Opening file %s with flags %i and mode %u.\n", pathname, flags);
+    fprintf(logFile, "Opening file %s with flags %i and mode %u ...", pathname, flags);
     int fd = glibc_open_2433(pathname, flags, mode);
 
     if ( fd != -1 )
     {
-        fprintf(logFile, "-> Attempting to update permissions on file %s.\n", pathname);
         int newFd = fcntl(fd, 0, 1024);
 
         if ( newFd >= 0 )
         {
-            fprintf(logFile, "-> Successfully updated permissions on file %s.\n", pathname);
             close(fd);
             fd = newFd;
         }
-        else
-        {
-            fprintf(logFile, "-> Failed to update permissions on file %s.\n", pathname);
-        }
 
-        fprintf(logFile, "-> Successfully opened file %s.\n", pathname);
+        fprintf(logFile, " successfully opened file %s.\n", pathname);
     }
     else
     {
-        fprintf(logFile, "-> Failed to open file %s because of error %i.\n", pathname, errno);
+        fprintf(logFile, " failed to open file %s because of error %i.\n", pathname, errno);
     }
 
     fclose(logFile);
