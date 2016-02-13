@@ -9,57 +9,65 @@ using namespace std;
 // sleep here or we'd block the main loop, we just skip calling it if the
 // delay since last is smaller than our desired ms.
 
-static uint32_t desiredTickRateHigh = 33;
-static uint32_t desiredTickRateLow = 3;
+static uint32_t desiredTickRateHigh;
+static uint32_t desiredTickRateLow;
 
-static uint32_t currentTickRate = 0;
-
-// usec
-static uint32_t lastAIUpdateTime = 0;
+namespace
+{
+    std::chrono::time_point<std::chrono::steady_clock> g_lastAIUpdateTime;
+    std::chrono::time_point<std::chrono::steady_clock> g_mainLoopStartTime;
+}
 
 static void CServerAIMaster__UpdateState(CServerAIMaster* aiMaster)
 {
-    const auto playerCount = g_pAppManager->ServerExoApp->Internal->
-                             ClientsList->Count();
+    const auto playerCount = g_pAppManager->ServerExoApp->Internal->ClientsList->Count();
+    const uint32_t tickrate = playerCount > 0 ? desiredTickRateHigh : desiredTickRateLow;
+    const uint32_t targetDelta = static_cast<uint32_t>((1000.0f / static_cast<float>(tickrate)));
 
-    currentTickRate = playerCount > 0 ? desiredTickRateHigh :
-                      desiredTickRateLow;
+    const auto curTime = std::chrono::steady_clock::now();
+    const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_lastAIUpdateTime).count();
 
-    const auto tickInterval =
-        static_cast<int>(1000.0f / static_cast<float>(currentTickRate));
-
-    static chrono::time_point<chrono::high_resolution_clock> last_at =
-        chrono::high_resolution_clock::now();
-
-    const auto now = chrono::high_resolution_clock::now();
-
-    const auto diff = chrono::duration_cast<chrono::milliseconds>(now - last_at).
-                      count();
-
-    if (diff >= tickInterval) {
-        lastAIUpdateTime = Profile::measure([&]() { aiMaster->UpdateState(); }) / 1000;
-
-        last_at = now;
-
-    } else
-        lastAIUpdateTime = 0;
+    if (elapsedTime > targetDelta)
+    {
+        aiMaster->UpdateState();
+        g_lastAIUpdateTime = curTIme;
+    }
 }
 
-void MainLoop__usleep_Hook()
+int eventMainLoopBefore(uintptr_t)
 {
-    // Substract the time we took for AI looping, down to 0.
-    constexpr uint32_t max_sleep = 10000u;
-    const auto val = max_sleep -
-                     std::max(0u, std::min(max_sleep, lastAIUpdateTime));
+    g_mainLoopStartTime = std::chrono::steady_clock::now();
+    return 0;
+}
 
-    usleep(val);
+int eventMainLoopAfter(uintptr_t)
+{
+    const auto curTime = std::chrono::steady_clock::now();
+    const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_mainLoopStartTime).count();
+
+    if (elapsedTime < 10)
+    {
+        usleep(10 - elapsedTime);
+    }
+
+    return 0;
 }
 
 void HookTickRate()
 {
+    HookEvent(EVENT_CORE_PLUGINSLOADED, [](uintptr_t) -> int
+    {
+        HookEvent(EVENT_CORE_MAINLOOP_BEFORE, eventMainLoopBefore);
+        HookEvent(EVENT_CORE_MAINLOOP_AFTER, eventMainLoopAfter);
+        return 0;
+    });
+
     NX_HOOK_CALL(0x080a052b, CServerAIMaster__UpdateState);
 
-    NX_HOOK_CALL(0x0804BBF6, MainLoop__usleep_Hook);
+    static constexpr uintptr_t address = 0x0804BBEE;
+    static constexpr size_t length = 16;
+    d_enable_write(address);
+    memset(reinterpret_cast<void*>(address), 0x90, length);
 }
 
 void SetTargetTickRates(uint32_t hi, uint32_t lo)
