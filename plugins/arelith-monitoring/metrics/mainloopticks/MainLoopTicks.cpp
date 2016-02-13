@@ -57,7 +57,7 @@ int Metrics::MainLoopTicks::MainLoopAfter(uintptr_t)
         std::string query =
             std::string("INSERT INTO monitoring_snapshots(monitoring_servers_ID, MainLoopTicks, PlayerCount) VALUES(") +
             std::to_string(ServerConfig::g_serverId) + ", " +
-            std::to_string(g_pAppManager->ServerExoApp->Internal->ClientsList->Count() + ", "
+            std::to_string(g_pAppManager->ServerExoApp->Internal->ClientsList->Count() + ", " +
             std::to_string(g_mainLoopTicks) + ")";
 
         mysql_query(g_connection, query.c_str());
