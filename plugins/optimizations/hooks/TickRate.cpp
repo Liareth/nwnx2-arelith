@@ -18,22 +18,6 @@ namespace
     std::chrono::time_point<std::chrono::steady_clock> g_mainLoopStartTime;
 }
 
-static void CServerAIMaster__UpdateState(CServerAIMaster* aiMaster)
-{
-    const auto playerCount = g_pAppManager->ServerExoApp->Internal->ClientsList->Count();
-    const uint32_t tickrate = playerCount > 0 ? desiredTickRateHigh : desiredTickRateLow;
-    const uint32_t targetDelta = static_cast<uint32_t>((1000.0f / static_cast<float>(tickrate)));
-
-    const auto curTime = std::chrono::steady_clock::now();
-    const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_lastAIUpdateTime).count();
-
-    if (elapsedTime > targetDelta)
-    {
-        aiMaster->UpdateState();
-        g_lastAIUpdateTime = curTime;
-    }
-}
-
 int eventMainLoopBefore(uintptr_t)
 {
     g_mainLoopStartTime = std::chrono::steady_clock::now();
@@ -45,9 +29,12 @@ int eventMainLoopAfter(uintptr_t)
     const auto curTime = std::chrono::steady_clock::now();
     const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_mainLoopStartTime).count();
 
-    if (elapsedTime < 10)
+    const uint32_t tickrate = playerCount > 0 ? desiredTickRateHigh : desiredTickRateLow;
+    const uint32_t targetDelta = static_cast<uint32_t>((1000.0f / static_cast<float>(tickrate)));
+
+    if (elapsedTime < targetDelta)
     {
-        usleep((10 - elapsedTime) * 1000.0f);
+        usleep((targetDelta - elapsedTime) * 1000.0f);
     }
 
     return 0;
@@ -55,14 +42,6 @@ int eventMainLoopAfter(uintptr_t)
 
 void HookTickRate()
 {
-    HookEvent(EVENT_CORE_PLUGINSLOADED, [](uintptr_t) -> int
-    {
-        HookEvent(EVENT_CORE_MAINLOOP_BEFORE, eventMainLoopBefore);
-        HookEvent(EVENT_CORE_MAINLOOP_AFTER, eventMainLoopAfter);
-        return 0;
-    });
-
-    NX_HOOK_CALL(0x080a052b, CServerAIMaster__UpdateState);
     NOP(0x0804BBEE, 16);
 }
 
