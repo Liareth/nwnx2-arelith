@@ -1,6 +1,7 @@
 #include "MainLoopTicks.hpp"
 #include "ServerConfig.hpp"
 
+#include "NWNXApi.h"
 #include "newpluginapi.h"
 #include "core/core.h"
 #include "mysql.h"
@@ -54,8 +55,9 @@ int Metrics::MainLoopTicks::MainLoopAfter(uintptr_t)
     if (std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_lastFlushTime).count() > FLUSH_INTERVAL)
     {
         std::string query =
-            std::string("INSERT INTO monitoring_snapshots(monitoring_servers_ID, MainLoopTicks) VALUES(") + 
+            std::string("INSERT INTO monitoring_snapshots(monitoring_servers_ID, MainLoopTicks, PlayerCount) VALUES(") +
             std::to_string(ServerConfig::g_serverId) + ", " +
+            std::to_string(g_pAppManager->ServerExoApp->Internal->ClientsList->Count() + ", "
             std::to_string(g_mainLoopTicks) + ")";
 
         mysql_query(g_connection, query.c_str());
