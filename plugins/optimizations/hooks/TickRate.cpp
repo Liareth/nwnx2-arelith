@@ -26,6 +26,7 @@ int eventMainLoopBefore(uintptr_t)
 
 int eventMainLoopAfter(uintptr_t)
 {
+    const auto playerCount = g_pAppManager->ServerExoApp->Internal->ClientsList->Count();
     const auto curTime = std::chrono::steady_clock::now();
     const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_mainLoopStartTime).count();
 
@@ -42,6 +43,13 @@ int eventMainLoopAfter(uintptr_t)
 
 void HookTickRate()
 {
+    HookEvent(EVENT_CORE_PLUGINSLOADED, [](uintptr_t) -> int
+    {
+        HookEvent(EVENT_CORE_MAINLOOP_BEFORE, eventMainLoopBefore);
+        HookEvent(EVENT_CORE_MAINLOOP_AFTER, eventMainLoopAfter);
+        return 0;
+    });
+
     NOP(0x0804BBEE, 16);
 }
 
