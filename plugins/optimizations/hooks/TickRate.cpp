@@ -53,6 +53,15 @@ int eventMainLoopAfter(uintptr_t)
     return 0;
 }
 
+// Puts a nopsled at the given address, with the given length.
+inline void NOP(const uintptr_t address, const size_t length)
+{
+    const uint32_t pageSize = sysconf(_SC_PAGESIZE);
+    const uint32_t pages =  1 + (length / pageSize);
+    nx_hook_enable_write((void*) address, pages);
+    memset(reinterpret_cast<void*>(address), 0x90, length);
+}
+
 void HookTickRate()
 {
     HookEvent(EVENT_CORE_PLUGINSLOADED, [](uintptr_t) -> int
@@ -63,11 +72,7 @@ void HookTickRate()
     });
 
     NX_HOOK_CALL(0x080a052b, CServerAIMaster__UpdateState);
-
-    static constexpr uintptr_t address = 0x0804BBEE;
-    static constexpr size_t length = 16;
-    d_enable_write(address);
-    memset(reinterpret_cast<void*>(address), 0x90, length);
+    NOP(0x0804BBEE, 16);
 }
 
 void SetTargetTickRates(uint32_t hi, uint32_t lo)
