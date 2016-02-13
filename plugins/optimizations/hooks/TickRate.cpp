@@ -53,15 +53,6 @@ int eventMainLoopAfter(uintptr_t)
     return 0;
 }
 
-// Puts a nopsled at the given address, with the given length.
-inline void NOP(const uintptr_t address, const size_t length)
-{
-    const uint32_t pageSize = sysconf(_SC_PAGESIZE);
-    const uint32_t pages =  1 + (length / pageSize);
-    nx_hook_enable_write((void*) address, pages);
-    memset(reinterpret_cast<void*>(address), 0x90, length);
-}
-
 void HookTickRate()
 {
     HookEvent(EVENT_CORE_PLUGINSLOADED, [](uintptr_t) -> int
@@ -93,6 +84,6 @@ uint32_t GetTargetTickRateLow()
 
 uint32_t GetCurrentTickRate()
 {
-    return currentTickRate;
+    return 0;
 }
 
