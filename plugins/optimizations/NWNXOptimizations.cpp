@@ -32,7 +32,7 @@ bool CNWNXOptimizations::OnCreate(gline* config, const char* LogDir)
         exit(1);
     }
 
-    HookHrTimer();
+    //HookHrTimer();
 
     HookConsole();
 
