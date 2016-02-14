@@ -21,6 +21,6 @@ void HookHrTimer()
         return 0;
     });
 
-    NX_HOOK(CExoTimers__GetHighResolutionTimer, 0x082d1d50,
+    NX_HOOK(CExoTimers__GetHighResolutionTimer, 0x082CC7A8,
             CExoTimers__GetHighResolutionTimer_hook, 6);
 }

@@ -28,14 +28,14 @@ int eventMainLoopAfter(uintptr_t)
 {
     const auto playerCount = g_pAppManager->ServerExoApp->Internal->ClientsList->Count();
     const auto curTime = std::chrono::steady_clock::now();
-    const auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(curTime - g_mainLoopStartTime).count();
+    const auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(curTime - g_mainLoopStartTime).count();
 
     const uint32_t tickrate = playerCount > 0 ? desiredTickRateHigh : desiredTickRateLow;
-    const uint32_t targetDelta = static_cast<uint32_t>((1000.0f / static_cast<float>(tickrate)));
+    const uint32_t targetDelta = static_cast<uint32_t>((1000.0f / static_cast<float>(tickrate)) * 1000.0f);
 
     if (elapsedTime < targetDelta)
     {
-        usleep((targetDelta - elapsedTime) * 1000.0f);
+        usleep(targetDelta - elapsedTime);
     }
 
     return 0;
